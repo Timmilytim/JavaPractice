@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DbPractice {
     public static void main(String[] args) {
-        String url = "jdbc:mysql: //localhost:3306/Javatest";
+        String url = "jdbc:mysql: //localhost:3306/account";
         String username = "root";
         String password = "";
 
@@ -13,11 +13,11 @@ public class DbPractice {
                 Statement state = conn.createStatement();
 
 ////                TO CREATE A DATABASE
-//                String sql = " CREATE DATABASE IF NOT EXISTS Javatest";
+//                String sql = " CREATE DATABASE IF NOT EXISTS Account";
 //                state.execute(sql);
 
 //                TO CREATE A TABLE
-//                String sql2 = "CREATE TABLE IF NOT EXISTS jdbcTest( id INTEGER, name TEXT, phone TEXT, email TEXT)";
+//                String sql2 = "CREATE TABLE IF NOT EXISTS user( id INTEGER, name TEXT, email TEXT, password TEXT)";
 //                state.execute(sql2);
 
 //                 TO INSERT VALUES INTO THE TABLE
