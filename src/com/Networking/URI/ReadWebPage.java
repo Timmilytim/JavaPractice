@@ -11,7 +11,7 @@ import java.util.Map;
 public class ReadWebPage {
     public static void main(String[] args) {
         try {
-            URL url = new URL("https:// en.wikipedia.org/wiki/" +
+            URL url = new URL("https://en.wikipedia.org/wiki/" +
                     "Wikipedia:very_short_featured_articles");
             URLConnection urlConnection = url.openConnection();
             urlConnection.setDoOutput(true);
