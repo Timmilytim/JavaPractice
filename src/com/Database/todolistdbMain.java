@@ -47,7 +47,8 @@ public class todolistdbMain {
         try (Connection conn = DriverManager.getConnection(todolistdb.url, todolistdb.username, todolistdb.password)) {
             {
                 Statement state = conn.createStatement();
-                PreparedStatement stat = conn.prepareStatement("INSERT INTO jdbcTest (id, name,phone, email) VALUES (?,?,?,?)");
+                try{
+                    PreparedStatement stat = conn.prepareStatement("INSERT INTO jdbcTest (id, name,phone, email) VALUES (?,?,?,?)");
 
                 System.out.println("Enter ID: ");
                 stat.setInt(1,sc.nextInt());
@@ -63,9 +64,11 @@ public class todolistdbMain {
 
                 stat.execute();
 
-                p.println("Added Successfully..\n\n");
+                p.println("Added Successfully..\n");
                 state.close();
-                System.out.println("Done..");
+                }catch (SQLIntegrityConstraintViolationException e){
+                    System.out.println(" ID Exists: " + e.getMessage());
+                }
 
             }
 
@@ -78,10 +81,9 @@ public class todolistdbMain {
         try (Connection conn = DriverManager.getConnection(todolistdb.url, todolistdb.username, todolistdb.password)) {
             {
                 Statement state = conn.createStatement();
-                PreparedStatement stat = conn.prepareStatement("DELETE FROM jdbcTest WHERE id = ?");
-                System.out.println("Remove name: ");
-                stat.setInt(1,sc.nextInt() );
-
+                System.out.println("Enter ID: ");
+                int id = sc.nextInt();
+                PreparedStatement stat = conn.prepareStatement("DELETE FROM jdbcTest WHERE id = " + id);
                 stat.execute();
 
                 p.println("Removed Successfully..\n\n");
@@ -121,43 +123,29 @@ public class todolistdbMain {
 
                  int column = sc.nextInt();
 
+                 String update = null;
                 if (column == 1){
-                    Statement state = conn.createStatement();
-                    System.out.println("Enter id");
-                    int id = sc.nextInt();
-                    PreparedStatement stat = conn.prepareStatement("UPDATE jdbcTest SET name = ? WHERE id = " +id);
-                    System.out.println("SET: ");
-                    stat.setString(1,sc.next() );
-
-                    stat.executeUpdate();
-                    p.println("Modified Successfully..\n\n");
-                    state.close();
+                    update = "name";
                 }
                 else if (column == 2) {
-                    Statement state = conn.createStatement();
-                    PreparedStatement stat = conn.prepareStatement("UPDATE jdbcTest SET phone = ? WHERE id = ?");
-                    System.out.println("SET: ");
-                    stat.setString(3,sc.next() );
-
-                    System.out.println("WHERE ID: ");
-                    stat.setInt(1,sc.nextInt() );
-                    stat.executeUpdate();
-                    p.println("Modified Successfully..\n\n");
-                    state.close();
+                    update = "phone";
                 }else if (column == 3) {
-                    Statement state = conn.createStatement();
-                    PreparedStatement stat = conn.prepareStatement("UPDATE jdbcTest SET email = ? WHERE id = ?");
-                    System.out.println("SET: ");
-                    stat.setString(4,sc.next() );
-
-                    System.out.println("WHERE ID: ");
-                    stat.setInt(1,sc.nextInt() );
-                    stat.executeUpdate();
-                    p.println("Modified Successfully..\n\n");
-                    state.close();
+                    update = "email";
                 }else {
                     System.out.println("Invalid Column Name....");
                 }
+
+                Statement state = conn.createStatement();
+                System.out.println("Enter id");
+                int id = sc.nextInt();
+                PreparedStatement stat = conn.prepareStatement("UPDATE jdbcTest SET "+ update + " = ? WHERE id = " + id);
+                System.out.println("SET: ");
+                stat.setString(1,sc.next() );
+
+                stat.executeUpdate();
+                p.println("Modified Successfully..\n\n");
+                state.close();
+
 
                 System.out.println("Done..");
             }
