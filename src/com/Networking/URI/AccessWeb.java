@@ -19,7 +19,7 @@ public class AccessWeb {
                 System.out.println(line);
             }
             inputStream.close();
-        }catch (IOException e){
+        }catch(IOException e){
 
         }
     }
